@@ -1,0 +1,6 @@
+.chip {
+  @apply px-3 py-1 border rounded-md cursor-pointer;
+}
+.active-chip {
+  @apply bg-blue-600 text-white;
+}

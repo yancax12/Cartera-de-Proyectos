@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Portafolio & Blog — Desarrollador Full-Stack</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./assets/css/custom.css">
+</head>
+<body class="bg-white text-slate-800 dark:bg-slate-950 dark:text-slate-100">
+
+  <!-- HEADER -->
+  <header class="sticky top-0 bg-white dark:bg-slate-900 shadow z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center p-4">
+      <h1 class="font-bold text-lg">Full-Stack Dev</h1>
+      <nav class="hidden md:flex gap-6">
+        <a href="#sobre-mi">Sobre mí</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#blog">Blog</a>
+        <a href="#contacto">Contacto</a>
+      </nav>
+      <button id="themeToggle" class="p-2 border rounded-md">🌙</button>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="max-w-6xl mx-auto p-8">
+    <h2 class="text-4xl font-extrabold">Hola, soy <span class="text-blue-600">[Tu Nombre]</span></h2>
+    <p class="mt-4 text-lg">Desarrollador Full-Stack especializado en Node.js, React y DevOps.</p>
+  </section>
+
+  <!-- PROYECTOS -->
+  <section id="proyectos" class="max-w-6xl mx-auto p-8">
+    <h2 class="text-2xl font-bold">Proyectos</h2>
+    <input id="projectSearch" type="search" placeholder="Buscar proyectos..." class="border p-2 rounded-md mt-2 w-full">
+    <div id="projectChips" class="flex gap-2 mt-4">
+      <button data-filter="all" class="chip">Todos</button>
+      <button data-filter="frontend" class="chip">Frontend</button>
+      <button data-filter="backend" class="chip">Backend</button>
+    </div>
+    <div id="projectsGrid" class="grid md:grid-cols-3 gap-6 mt-6">
+      <article class="project-card border p-4 rounded-md" data-tags="backend">
+        <h3 class="font-semibold">API de Facturación</h3>
+        <p>Microservicio con NestJS + PostgreSQL.</p>
+      </article>
+      <article class="project-card border p-4 rounded-md" data-tags="frontend">
+        <h3 class="font-semibold">Dashboard React</h3>
+        <p>Panel con gráficos en tiempo real.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- BLOG -->
+  <section id="blog" class="max-w-6xl mx-auto p-8">
+    <h2 class="text-2xl font-bold">Blog</h2>
+    <input id="blogSearch" type="search" placeholder="Buscar en blog..." class="border p-2 rounded-md mt-2 w-full">
+    <div id="blogChips" class="flex gap-2 mt-4">
+      <button data-filter="all" class="chip">Todos</button>
+      <button data-filter="devops" class="chip">DevOps</button>
+    </div>
+    <div id="blogGrid" class="grid md:grid-cols-3 gap-6 mt-6">
+      <article class="blog-card border p-4 rounded-md" data-tags="devops">
+        <h3 class="font-semibold">CI/CD con GitHub Actions</h3>
+        <p>Automatización de despliegues con pipelines.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- CONTACTO -->
+  <section id="contacto" class="max-w-6xl mx-auto p-8">
+    <h2 class="text-2xl font-bold">Contacto</h2>
+    <p>Correo: tu.email@dev.com</p>
+  </section>
+
+  <footer class="p-6 text-center text-sm">© <span id="year"></span> [Tu Nombre]</footer>
+
+  <script type="module" src="./assets/js/main.js"></script>
+</body>
+</html>
