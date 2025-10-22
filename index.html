@@ -1,442 +1,391 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth dark"> <!-- inicia en oscuro -->
+<html lang="en">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Portafolio — Full Stack Developer</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; }
-    .skill-card { position: relative; cursor: pointer; transition: transform .3s ease; }
-    .skill-card:hover { transform: translateY(-4px) scale(1.03); }
-    .skill-overlay {
-      position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      font-weight: 800; font-size: 1.125rem; border-radius: 0.75rem; opacity: 0; transition: opacity .25s ease;
-      background: rgba(0,0,0,.75); color: #fff;
-    }
-    .skill-card:hover .skill-overlay, .skill-card.active .skill-overlay { opacity: 1; }
-  </style>
-  <script>
-    // Preferencia guardada: aplicar antes de pintar para evitar "flash"
-    (function () {
-      const saved = localStorage.getItem('theme');
-      const root = document.documentElement;
-      if (saved === 'light') root.classList.remove('dark'); // día
-      else root.classList.add('dark'); // noche por defecto
-    })();
-  </script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Portfolio </title>
+    <!--= Google Fonts =-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&display=swap" rel="stylesheet">
+
+
+    <!--= Remixicons=-->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+    <!--= SwiperJS CSS =-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+
+
+    <!--= Main CSS =-->
+    <link rel="stylesheet" href="/assets/css/main.css">
+
 </head>
 
-<body class="bg-white text-gray-900 dark:bg-black dark:text-white transition-colors duration-300">
-  <!-- HEADER -->
-  <header class="sticky top-0 z-50 border-b bg-white/90 backdrop-blur dark:bg-black/80 border-gray-200 dark:border-gray-800">
-    <div class="max-w-7xl mx-auto flex items-center justify-between px-6 py-4">
-      <h1 class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">Mi Portafolio</h1>
-      <nav class="hidden md:flex items-center gap-6 text-sm font-medium">
-        <a href="#skills" class="hover:text-emerald-600 dark:hover:text-emerald-400">Skills</a>
-        <a href="#projects" class="hover:text-emerald-600 dark:hover:text-emerald-400">Proyectos</a>
-        <a href="#about" class="hover:text-emerald-600 dark:hover:text-emerald-400">Sobre mí</a>
-        <a href="#contact" class="hover:text-emerald-600 dark:hover:text-emerald-400">Contacto</a>
-      </nav>
-      <button id="themeToggle" class="rounded-md border px-3 py-2 text-sm border-gray-300 dark:border-gray-700">
-        ☀️
-      </button>
-    </div>
-  </header>
+<body>
 
-  <!-- HERO -->
-  <section class="min-h-screen flex items-center justify-center px-6
-                  bg-gradient-to-br from-gray-100 via-white to-gray-100
-                  dark:from-black dark:via-gray-900 dark:to-black">
-    <div class="max-w-5xl w-full flex flex-col md:flex-row items-center gap-10 text-center md:text-left">
-      <!-- FOTO -->
-      <img src="./assets/img/1.png" alt="Foto programador"
-           class="w-48 h-48 md:w-64 md:h-64 rounded-full object-cover border-4 border-emerald-500 shadow-2xl">
-
-      <!-- TEXTO -->
-      <div>
-        <p class="text-emerald-600 dark:text-emerald-400 text-lg flex items-center justify-center md:justify-start gap-2">
-          <span class="h-3 w-3 rounded-full bg-emerald-500 animate-pulse"></span>
-          Disponible 
-        </p>
-        <h1 class="text-5xl md:text-6xl font-extrabold mt-2">Jhan Carlos Yangali Huaman👨‍💻</h1>
-        <h2 class="text-xl md:text-2xl text-gray-700 dark:text-gray-300 mt-2">
-           Full Stack Developer | Web Applications
-        </h2>
-        <p class="mt-6 text-lg leading-relaxed max-w-xl text-gray-600 dark:text-gray-400">
-          <span class="font-semibold text-emerald-600 dark:text-emerald-400"> 6 meses de experiencia  como practicante pre-profesional  </span> PHP, JavaScript, MySQL, Laravel | Agile & UI/UX
-          Me enfoco en <span class="font-semibold">diseño</span>, <span class="font-semibold">rendimiento</span> y <span class="font-semibold">funcionalidad</span>.
-        </p>
-      </div>
-    </div>
-  </section>
-
-
-
-<!-- SKILLS -->
-<section id="skills" class="py-20 px-6 bg-gray-50 text-gray-900 dark:bg-black dark:text-white transition-colors">
-  <style>
-    /* Glow suave + toggle móvil */
-    .skill { position: relative; }
-    .skill .icon-wrap {
-      position: relative; width: 56px; height: 56px; border-radius: 9999px;
-      display: grid; place-items: center; transition: transform .2s ease;
-    }
-    .skill .pct {
-      position: absolute; inset: 0; display: grid; place-items: center;
-      font-weight: 800; font-size: .85rem; letter-spacing: .5px;
-      color: #fff; background: rgba(0,0,0,.65); border-radius: 9999px;
-      opacity: 0; transition: opacity .2s ease;
-    }
-    .skill:hover .pct, .skill.active .pct { opacity: 1; }
-    .skill:hover .icon-wrap, .skill.active .icon-wrap { transform: translateY(-2px) scale(1.03); }
-    /* Brillo (neón) emerald */
-    .skill .icon-wrap { box-shadow: 0 0 0 0 rgba(16,185,129,0); }
-    .skill:hover .icon-wrap, .skill.active .icon-wrap {
-      box-shadow:
-        0 0 10px rgba(16,185,129,.55),
-        0 0 18px rgba(16,185,129,.35),
-        0 0 30px rgba(16,185,129,.2);
-    }
-  </style>
-
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold text-center mb-12">Habilidades Técnicas</h2>
-
-    <div class="grid md:grid-cols-2 gap-12">
-      <!-- FRONTEND -->
-      <div>
-        <h3 class="text-xl font-semibold mb-6 text-emerald-600 dark:text-emerald-400">Frontend</h3>
-        <div class="grid grid-cols-3 sm:grid-cols-4 gap-x-8 gap-y-8">
-          <!-- HTML -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain.svg" alt="HTML5" class="w-12 h-12">
-              <span class="pct">95%</span>
-            </div>
-            <p class="mt-2 text-xs sm:text-sm">HTML5</p>
-          </div>
-          <!-- CSS -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain.svg" alt="CSS3" class="w-12 h-12">
-              <span class="pct">90%</span>
-            </div>
-            <p class="mt-2 text-xs sm:text-sm">CSS3</p>
-          </div>
-          <!-- JavaScript -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript" class="w-12 h-12">
-              <span class="pct">90%</span>
-            </div>
-            <p class="mt-2 text-xs sm:text-sm">JavaScript</p>
-          </div>
-          <!-- TypeScript -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" alt="TypeScript" class="w-12 h-12">
-              <span class="pct">80%</span>
-            </div>
-            <p class="mt-2 text-xs sm:text-sm">TypeScript</p>
-          </div>
-          <!-- React -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" class="w-12 h-12">
-              <span class="pct">90%</span>
-            </div>
-            <p class="mt-2 text-xs sm:text-sm">React</p>
-          </div>
-          <!-- Angular -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/angularjs/angularjs-original.svg" alt="Angular" class="w-12 h-12">
-              <span class="pct">75%</span>
-            </div>
-            <p class="mt-2 text-xs sm:text-sm">Angular</p>
-          </div>
-          <!-- Next.js -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original-wordmark.svg" alt="Next.js" class="w-12 h-12 invert dark:invert-0">
-              <span class="pct">85%</span>
-            </div>
-            <p class="mt-2 text-xs sm:text-sm">Next.js</p>
-          </div>
-          <!-- Tailwind -->
-        <div class="skill flex flex-col items-center">
-       <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-     <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" 
-         alt="Tailwind" class="w-12 h-12">
-       <span class="pct">85%</span>
-    </div>
-  <p class="mt-2 text-xs sm:text-sm">Tailwind</p>
-     </div>
+    <!--= Header =-->
+    <header id="header" class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="index.html" class="nav__brand">
+                    <i class="ri-code-s-slash-line"></i> Portafolio
+                </a>
+                <div class="nav__menu" id="nav-menu">
+                    <ul class="nav__list">
+                        <li class="nav__item">
+                            <a href="#hero" class="nav__link">Inicio</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#about" class="nav__link">Sobre mi</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#qualification" class="nav__link">Experiencia</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#service" class="nav__link">Servicios</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#project" class="nav__link">Proyectos</a>
+                        </li>
+                        <li class="nav__item">
+                            <a href="#contact" class="nav__link">Contacto</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="nav__toggle">
+                    <i id="nav-toggle" class="ri-menu-3-line"></i>
+                </div>
+            </nav>
         </div>
-      </div>
-
-      <!-- BACKEND -->
-      <div>
-        <h3 class="text-xl font-semibold mb-6 text-emerald-600 dark:text-emerald-400">Backend</h3>
-        <div class="grid grid-cols-3 sm:grid-cols-4 gap-x-8 gap-y-8">
-          <!-- Node.js -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node.js" class="w-12 h-12">
-              <span class="pct">85%</span>
+    </header>
+    <!--= main =-->
+    <main class="main">
+        <!--= Hero =-->
+        <section id="hero" class="hero">
+            <div class="container">
+                <div class="d-grid hero__wrapper">
+                    <div class="hero__content">
+                        <h1 class="hero__title">Hola, Soy Jhan Carlos Yangali Huaman<br>Full Stack Developer</h1>
+                        <p class="hero__description"> 10 meses de experiencia como practicante pre-profesional PHP, JavaScript, MySQL, Laravel | Agile & UI/UX Me enfoco en diseño, rendimiento y funcionalidad.</p>
+                        <div class="hero__info">
+                            <div class="hero__info-wrapper">
+                                <p class="hero__info-number">10+</p>
+                                <h2 class="hero__info-title">meses<br>Experiencia</h2>
+                            </div>
+                            <div class="hero__info-wrapper">
+                                <p class="hero__info-number">10+</p>
+                                <h2 class="hero__info-title">Proyectos<br>Completado</h2>
+                            </div>
+                            <div class="hero__info-wrapper">
+                                <p class="hero__info-number">02</p>
+                                <h2 class="hero__info-title">Emppresas<br> Trabajadas</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <img src="/assets/img/1.png" alt="Dave" class="hero__img">
+                </div>
             </div>
-            <p class="mt-2 text-xs sm:text-sm">Node.js</p>
-          </div>
-          <!-- Laravel -->
-<div class="skill flex flex-col items-center">
-  <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" 
-         alt="Laravel" class="w-12 h-12">
-    <span class="pct">80%</span>
-  </div>
-  <p class="mt-2 text-xs sm:text-sm">Laravel</p>
-</div>
+        </section>
 
-          <!-- MySQL -->
-        <div class="skill flex flex-col items-center">
-         <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" 
-         alt="MySQL" class="w-12 h-12">
-         <span class="pct">80%</span>
-        </div>
-         <p class="mt-2 text-xs sm:text-sm">MySQL</p>
-       </div>
-         <!-- SQL Server -->
-     <div class="skill flex flex-col items-center">
-     <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" 
-         alt="SQL Server" class="w-12 h-12" 
-         onerror="this.onerror=null;this.src='https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/microsoftsqlserver.svg'; this.classList.add('invert','dark:invert-0');">
-    <span class="pct">85%</span>
-    </div>
-   <p class="mt-2 text-xs sm:text-sm">SQL Server</p>
-    </div>
-   <!-- PostgreSQL -->
-<div class="skill flex flex-col items-center">
-  <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" 
-         alt="PostgreSQL" class="w-12 h-12">
-    <span class="pct">75%</span>
-  </div>
-  <p class="mt-2 text-xs sm:text-sm">PostgreSQL</p>
-</div>
-
-
-          <!-- Java -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" alt="Java" class="w-12 h-12">
-              <span class="pct">75%</span>
+        <!--= About =-->
+        <section id="about" class="section about">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="section__title">Sobre mi </h2>
+                    <span class="section__subtitle">¿Quién soy?</span>
+                </div>
+                <div class="d-grid about__wrapper">
+                    <div class="about__content">
+                        <h3 class="about__title">Estudiante de Ingenieria de Sistemas   </h3>
+                        <p class="about__description"> Estudiante de Ingeniería de Sistemas, actualmente cursando el 9no ciclo, con sólidos conocimientos en desarrollo frontend y backend. Tengo experiencia trabajando con tecnologías como HTML, CSS, JavaScript, React, Angular, y Tailwind en el frontend, y Laravel, Python, PHP, Node.js, MongoDB, MySQL y SqlServer en el backend. Además, soy hábil en el uso de macros con Excel, y tengo experiencia en diseño de interfaces con Figma y Balsamiq.</p>
+                        <a href="#" class="btn btn--primary"> Saber mas !</a>
+                    </div>
+                    <div class="skills">
+                        <h3 class="skills__title">Tecnologias :</h3>
+                        <div class="skills__wrapper">
+                            <div class="skills__content">
+                                <h4 class="skills__subtitle">Backend</h4>
+                                <ul class="skills__list">
+                                   <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        Laravel</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        Python</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        PHP</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        Node.js</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        MongoDB</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        MySQL</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        SqlServer</li>    
+                                </ul>
+                            </div>
+                            <div class="skills__content">
+                                <h4 class="skills__subtitle">Frontend</h4>
+                                <ul class="skills__list">
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        HTML</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        CSS</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        JavaScript</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        Bootstrap</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        React</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        Angular</li>
+                                    <li class="skills__item"><i class="ri-arrow-right-s-fill"></i>
+                                        Talwind</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <p class="mt-2 text-xs sm:text-sm">Java</p>
-          </div>
-          <!-- Python -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" class="w-12 h-12">
-              <span class="pct">80%</span>
+        </section>
+
+        <!--= Qualification =-->
+        <section id="qualification" class="section qualification">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="section__title">Experiencia</h2>
+                    <span class="section__subtitle">Experiencia & Educacion</span>
+                </div>
+                <!--= Professional Experience =-->
+                <div class="qualification__wrapper">
+                    <h3 class="qualification__name">
+                        <i class="ri-briefcase-fill"></i>
+                         Proyectos Pre-profesionales
+                    </h3>
+                     <h3 class="qualification__name">
+                        <i class="ri-briefcase-fill"></i>
+                         Empresa IBCORP (6 meses)
+                    </h3>
+              
+                    <div class="d-grid qualification__content">
+                        <!--= Experience 1 =-->
+
+
+                        <div class="qualification__item">
+                    <img src="/assets/img/IBOUtplacement.png" alt="Crypto Application " class="project__img">
+
+                            <h3 class="qualification__title">IBOUtplacement</h3>
+                            <p class="qualification__description">IBOutplacement es una plataforma para facilitar la transición laboral, desarrollada con PHP, Laravel y MySQL, que optimiza perfiles profesionales, mejora currículums y prepara para entrevistas. .</p>
+                            <span class="qualification__date">Marzo - Agosto 2025</span>
+                        </div>
+                        <!--= Experience 2 =-->
+                        <div class="qualification__item">
+                         <img src="/assets/img/IBMAximiz.png" alt="Crypto Application " class="project__img">
+
+                           <h3 class="qualification__title">IBMAximiz</h3>
+                            <p class="qualification__description"> IBMaximz es una plataforma que optimiza el rendimiento empresarial, desarrollada con PHP, Laravel y MySQL, permitiendo mejorar la eficiencia operativa y tomar decisiones estratégicas basadas en datos precisos..</p>
+                            <span class="qualification__date"> Marzo - Agosto 2025</span>
+                        </div>
+                        <!--= Experience 3 =-->
+                        <div class="qualification__item">
+                     <img src="/assets/img/IBSeguros.png" alt="Crypto Application " class="project__img">
+
+                            <h3 class="qualification__title">IBSeguros</h3>
+                            <p class="qualification__description"> IBSeguros es una plataforma de gestión de seguros, desarrollada con PHP, Laravel y MySQL, que optimiza la administración de pólizas, clientes y reclamaciones..</p>
+                            <span class="qualification__date">Marzo - Agosto 2025</span>
+                        </div>
+                    </div>
+                </div>
+                <!--= Education =-->
+                <div class="qualification__wrapper">
+                    <h3 class="qualification__name">
+                        <i class="ri-booklet-fill"></i>
+                        GRUPO ISOCAL (4 meses)
+                    </h3>
+                    <div class="d-grid qualification__content">
+                        <!--= Education 1 =-->
+                        <div class="qualification__item">
+                      <img src="/assets/img/2.jpeg" alt="Crypto Application " class="project__img">
+
+                            <h3 class="qualification__title"> OKEA</h3>
+                            <p class="qualification__description"> I'm working in web development and Design.I enjoy
+                                creating beautiful
+                                and intuitive web designs using Html css and make them interactive with Javascript.</p>
+                            <span class="qualification__date">2016 - 2017</span>
+                        </div>
+                        <!--= Education 2 =-->
+                        <div class="qualification__item">
+                            <h3 class="qualification__title">Master In Web Development</h3>
+                            <p class="qualification__description"> I'm working in web development and Design.I enjoy
+                                creating beautiful
+                                and intuitive web designs using Html css and make them interactive with Javascript.</p>
+                            <span class="qualification__date">2015 - 2016</span>
+                        </div>
+                        <!--= Education 3 =-->
+                        <div class="qualification__item">
+                            <h3 class="qualification__title">Software Engineer</h3>
+                            <p class="qualification__description"> I'm working in web development and Design.I enjoy
+                                creating beautiful
+                                and intuitive web designs using Html css and make them interactive with Javascript.</p>
+                            <span class="qualification__date">2011 - 2015</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="qualification__footer">
+                    <p class="qualification__footer-text">See my full resume</p>
+                    <a href="#" class="btn btn--primary">Resume</a>
+                </div>
             </div>
-            <p class="mt-2 text-xs sm:text-sm">Python</p>
-          </div>
-          <!-- PHP -->
-          <div class="skill flex flex-col items-center">
-            <div class="icon-wrap ring-2 ring-emerald-500/60 bg-white/10 dark:bg-white/5">
-              <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt="PHP" class="w-12 h-12">
-              <span class="pct">70%</span>
+        </section>
+
+        <!--= services =-->
+        <section id="service" class="section service">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="section__title">Services</h2>
+                    <span class="section__subtitle">What I do</span>
+                </div>
+                <div class="d-grid service__wrapper">
+                    <!--= service card 1 =-->
+                    <div class="service__card">
+                        <div class="service__icon">
+                            <i class="ri-layout-4-fill"></i>
+                        </div>
+                        <h3 class="service__title">Frontend<br>Development</h3>
+                        <a href="#" class="service__link">Know More !</a>
+                    </div>
+                    <!--= service card 2 =-->
+                    <div class="service__card">
+                        <div class="service__icon">
+                            <i class="ri-code-s-slash-line"></i>
+                        </div>
+                        <h3 class="service__title">Backend<br> Development</h3>
+                        <a href="#" class="service__link">Know More !</a>
+                    </div>
+                    <!--= service card 3 =-->
+                    <div class="service__card">
+                        <div class="service__icon">
+                            <i class="ri-pen-nib-fill"></i>
+                        </div>
+                        <h3 class="service__title">UI/UX<br> Design</h3>
+                        <a href="#" class="service__link">Know More !</a>
+                    </div>
+                </div>
             </div>
-            <p class="mt-2 text-xs sm:text-sm">PHP</p>
-          </div>
+        </section>
+
+        <!--= Projects =-->
+        <section id="project" class="section project">
+            <div class="container">
+                <div class="section__header">
+                    <h2 class="section__title">Proyectos Academicos</h2>
+                    <span class="section__subtitle">Mis Proyectos</span>
+                </div>
+                <div class="d-grid project__wrapper">
+                    <!--= project 1 =-->
+                    <div class="project__content">
+                        <img src="/assets/img/TRAVEL.png" alt="Agency Website" class="project__img">
+                        <h3 class="project__title">Sitema Gestion de Inventarios</h3>
+                        <p class="project__description"> Develop technical skills in web development.Gain practical
+                            experience through collaboration.
+                        </p>
+                        <a href="#" class="project__link">Demo
+                            <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                    <!--= project 2 =-->
+                    <div class="project__content">
+                        <img src="/assets/img/PORTFOLIO_.png" alt="Crypto Application " class="project__img">
+                        <h3 class="project__title"> Soporte Digital </h3>
+                        <p class="project__description"> Develop technical skills in web development.Gain practical
+                            experience through collaboration.
+                        </p>
+                        <a href="#" class="project__link">Demo
+                            <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                    <!--= project 3 =-->
+                    <div class="project__content">
+                        <img src="/assets/img/MOVIES_.png" alt="Ecommerce Website" class="project__img">
+                        <h3 class="project__title">Cafeteria</h3>
+                        <p class="project__description"> Develop technical skills in web development.Gain practical
+                            experience through collaboration.
+                        </p>
+                        <a href="#" class="project__link">Demo
+                            <i class="ri-arrow-right-line"></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!--= Testimonials =-->
+       
+
+        <!--======= Contact =======-->
+        <section id="contact" class="section contact">
+            <div class="container">
+                <div class="d-grid contact__wrapper">
+                    <div class="contact__content">
+                        <h2 class="contact__title">Contact Me ! Let's Work Together.</h2>
+                        <p class="contact__description">
+                            Have any questions? Reach out to me from
+                            this contact form and I will get back to you shortly.
+                        </p>
+                    </div>
+                    <div class="contact__btn">
+                        <a href="#" class="btn btn--secondary">Get in touch</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!--======== footer =====-->
+    <footer id="footer" class="footer">
+        <div class="container">
+            <div class="d-grid footer__wrapper">
+                <div class="footer__content">
+                    <h4 class="footer__title">Follow Me</h4>
+                    <ul class="footer__social-list">
+                        <li class="footer__social-item">
+                            <a href="#" class="footer__social-link">
+                                <i class="ri-facebook-fill"></i>
+                            </a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a href="#" class="footer__social-link">
+                                <i class="ri-instagram-fill"></i>
+                            </a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a href="#" class="footer__social-link">
+                                <i class="ri-twitter-fill"></i>
+                            </a>
+                        </li>
+                        <li class="footer__social-item">
+                            <a href="#" class="footer__social-link">
+                                <i class="ri-github-fill"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="footer__content">
+                    <h4 class="footer__title">Email </h4>
+                    <a href="#" class="footer__contact">yangaliyanca@gmail.com</a>
+                </div>
+                <div class="footer__content">
+                    <h4 class="footer__title">Contacto</h4>
+                    <a href="#" class="footer__contact">+51 958948193
+                    </a>
+                </div>
+            </div>
+            <p class="footer__copyright">&copy;Jhan Carlos | All Rights Reserved</p>
         </div>
-      </div>
-    </div>
-  </div>
+    </footer>
 
-  <!-- Toggle por click para móviles -->
-  <script>
-    document.querySelectorAll('#skills .skill').forEach(s => {
-      s.addEventListener('click', () => s.classList.toggle('active'));
-    });
-  </script>
-</section>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 
+    <script src="https://unpkg.com/scrollreveal"></script>
 
-
-
-
-<!-- PROYECTOS PRE-PROFESIONALES -->
-<section id="projects" class="py-20 px-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-white transition-colors">
-  <div class="max-w-6xl mx-auto">
-    <h2 class="text-3xl font-bold text-center mb-10">Proyectos Pre-Profesionales</h2>
-    <div class="grid md:grid-cols-3 gap-8">
-      
-      <!-- Proyecto 1 -->
-      <div class="rounded-xl p-6 shadow-lg border border-gray-200 bg-white
-                  hover:shadow-2xl transition transform hover:-translate-y-2
-                  dark:bg-gray-800 dark:border-gray-800">
-        <!-- Imagen -->
-        <div class="mb-4">
-          <img src="./assets/img/IBOUtplacement.png" alt="IBOutplacement" class="w-full h-40 object-cover rounded-lg">
-        </div>
-        <h3 class="font-semibold text-lg mb-2">IBOutplacement</h3>
-        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Laravel + JavaScript + Tailwind + PHP + mysql</p>
-        <a href="#" class="text-emerald-700 dark:text-emerald-400 font-medium hover:underline">Ver más →</a>
-      </div>
-
-      <!-- Proyecto 2 -->
-      <div class="rounded-xl p-6 shadow-lg border border-gray-200 bg-white
-                  hover:shadow-2xl transition transform hover:-translate-y-2
-                  dark:bg-gray-800 dark:border-gray-800">
-        <!-- Imagen -->
-        <div class="mb-4">
-          <img src="./assets/img/IBSeguros.png" alt="IBSalud" class="w-full h-40 object-cover rounded-lg">
-        </div>
-        <h3 class="font-semibold text-lg mb-2">IBSalud</h3>
-        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Laravel + JavaScript + Tailwind + PHP + mysql</p>
-        <a href="#" class="text-emerald-700 dark:text-emerald-400 font-medium hover:underline">Ver más →</a>
-      </div>
-
-      <!-- Proyecto 3 -->
-      <div class="rounded-xl p-6 shadow-lg border border-gray-200 bg-white
-                  hover:shadow-2xl transition transform hover:-translate-y-2
-                  dark:bg-gray-800 dark:border-gray-800">
-        <!-- Imagen -->
-        <div class="mb-4">
-          <img src="./assets/img/IBMAximiz.png" alt="IBJobCoach" class="w-full h-40 object-cover rounded-lg">
-        </div>
-        <h3 class="font-semibold text-lg mb-2">IBMAXimiz</h3>
-        <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Laravel + JavaScript + Tailwind + PHP + mysql</p>
-        <a href="#" class="text-emerald-700 dark:text-emerald-400 font-medium hover:underline">Ver más →</a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- PROYECTOS PERSONALES -->
-  <section id="projects" class="py-20 px-6 bg-white text-gray-900 dark:bg-gray-900 dark:text-white transition-colors">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="text-3xl font-bold text-center mb-10">Proyectos Personales</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="rounded-xl p-6 shadow-lg border border-gray-200 bg-white
-                    hover:shadow-2xl transition transform hover:-translate-y-2
-                    dark:bg-gray-800 dark:border-gray-800">
-          <h3 class="font-semibold text-lg mb-2">SaaS Billing</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Stripe + NestJS. Facturación recurrente escalable.</p>
-          <a href="#" class="text-emerald-700 dark:text-emerald-400 font-medium hover:underline">Ver más →</a>
-        </div>
-        <div class="rounded-xl p-6 shadow-lg border border-gray-200 bg-white
-                    hover:shadow-2xl transition transform hover:-translate-y-2
-                    dark:bg-gray-800 dark:border-gray-800">
-          <h3 class="font-semibold text-lg mb-2">E-commerce Headless</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Next.js + GraphQL + Prisma. Catálogo headless.</p>
-          <a href="#" class="text-emerald-700 dark:text-emerald-400 font-medium hover:underline">Ver más →</a>
-        </div>
-        <div class="rounded-xl p-6 shadow-lg border border-gray-200 bg-white
-                    hover:shadow-2xl transition transform hover:-translate-y-2
-                    dark:bg-gray-800 dark:border-gray-800">
-          <h3 class="font-semibold text-lg mb-2">AI Docs Assistant</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-4">Embeddings + búsqueda semántica (FastAPI).</p>
-          <a href="#" class="text-emerald-700 dark:text-emerald-400 font-medium hover:underline">Ver más →</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
-
-
- <!-- SOBRE MÍ (antes de contacto) -->
-<section id="about" class="py-20 px-6 bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-white transition-colors">
-  <div class="max-w-5xl mx-auto grid md:grid-cols-2 items-center gap-10">
-    
-    <!-- Imagen más pequeña -->
-    <div class="flex justify-center">
-      <img src="./assets/img/1.png" alt="Sobre mí" 
-           class="w-40 md:w-56 rounded-2xl shadow-xl object-cover">
-    </div>
-
-    <!-- Texto -->
- <!-- Texto -->
-<div>
-  <h2 class="text-3xl font-bold mb-6">Sobre mí</h2>
-  <p class="leading-relaxed text-gray-700 dark:text-gray-300">
-    Soy estudiante de <span class="font-semibold">Ingeniería de Sistemas (8.º ciclo)</span> 
-    con sólidos conocimientos en desarrollo 
-    <span class="text-emerald-600 dark:text-emerald-400">frontend</span> 
-    (React, Angular, Tailwind CSS) y 
-    <span class="text-emerald-600 dark:text-emerald-400">backend</span> 
-    (Node.js, Laravel, NestJS, PHP, Java, Python).
-    Tengo experiencia en proyectos pre-profesionales donde he aplicado 
-    integración de APIs, diseño responsivo y optimización de bases de datos 
-    (MySQL, PostgreSQL, SQL Server).
-    <br><br>
-    Me motiva aprender nuevas tecnologías y aportar en proyectos desafiantes 
-    de desarrollo web y software empresarial.
-  </p>
-</div>
-
-
-  </div>
-</section>
-
-  <!-- CONTACTO -->
-  <section id="contact" class="py-20 px-6 bg-white text-gray-900 dark:bg-black dark:text-white transition-colors">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl font-bold mb-6">Contacto</h2>
-      <p class="mb-6 text-gray-700 dark:text-gray-300">¿Tienes un proyecto interesante? Conversemos:</p>
-      <a href="mailto:yangaliyanca@gmail.com"
-         class="inline-block rounded-lg px-6 py-3 font-bold shadow-lg transition
-                bg-emerald-600 text-white hover:bg-emerald-500">
-        📧 yangaliyanca@gmail.com
-      </a>
-    </div>
-  </section>
-
-  <!-- FOOTER -->
-  <footer class="border-t bg-white text-gray-900 dark:bg-black dark:text-gray-400 border-gray-200 dark:border-gray-800 transition-colors">
-    <div class="max-w-7xl mx-auto px-6 py-6 text-center text-sm">
-      <p>© 2025 Jhan Carlos Yangali Huaman👨‍💻 — Todos los derechos reservados.</p>
-      <div class="flex justify-center gap-6 mt-4">
-        <a href="https://github.com/yancax12" target="_blank" aria-label="GitHub">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" class="w-6 h-6" alt="GitHub">
-        </a>
-        <a href="https://www.linkedin.com/in/jhan-carlos-yangali-huaman-ab5850294/" target="_blank" aria-label="LinkedIn">
-          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" class="w-6 h-6" alt="LinkedIn">
-        </a>
-        <a href="https://wa.me/51958948193" target="_blank" aria-label="WhatsApp">
-          <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" class="w-6 h-6" alt="WhatsApp">
-        </a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // Toggle claro/oscuro con icono y persistencia
-    const btn = document.getElementById('themeToggle');
-    const root = document.documentElement;
-
-    function setIcon() {
-      btn.textContent = root.classList.contains('dark') ? '☀️' : '🌙';
-    }
-    setIcon();
-
-    btn.addEventListener('click', () => {
-      root.classList.toggle('dark');
-      const mode = root.classList.contains('dark') ? 'dark' : 'light';
-      localStorage.setItem('theme', mode);
-      setIcon();
-    });
-
-    // Overlay de skills al click (además del hover)
-    document.querySelectorAll('.skill-card').forEach(card => {
-      card.addEventListener('click', () => card.classList.toggle('active'));
-    });
-  </script>
+    <script src="/assets/js/main.js"></script>
 </body>
+
 </html>
